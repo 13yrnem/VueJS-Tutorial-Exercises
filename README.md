@@ -1,1 +1,1 @@
-# Miscellaneous coding exercises with VueJS, JS, HTML, and CSS
+# Miscellaneous coding exercises with VueJS, HTML, and CSS
