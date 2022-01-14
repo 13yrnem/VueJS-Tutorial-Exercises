@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 3 Basics</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- code inside double moustache parsed as javascript -->
+        {{ greeting }}
+    </div>
+    <!-- "vue@next" ensures use of latest stable version -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        // instantiate Vue
+        let app = Vue.createApp({
+            // data is a function that returns an object
+            data: function () {
+                return {
+                    // function must return object, greeting is the object. Vue looks inside data object for a variable named greeting.
+                    greeting: 'Hello Vue 3!'
+                }
+            },
+        })
+        // mount app 
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

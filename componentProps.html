@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 3 Basics</title>
+    <style>
+        input {
+            margin: 10px;
+            display: block;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <login-form />
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        let app = Vue.createApp({
+            // retaining as placeholder from previous exercises
+            data: function () {
+                return {
+                    // placeholder
+                }
+            },
+            // retaining as placeholder from previous exercises
+            methods: {
+                // placeholder
+            }
+        })
+
+        app.component('login-form', {
+            // parent component (login-form)
+            // v-bind modifier allows html "label" to be parsed as javascript, so variables can be passed down to child component 
+            // v-bind shortcut is just ':' eg: ':label="someLabel"'
+            // example shows how new syntax "update" can be used to emit an event from a child, for the parent component to update
+            // including v-model creates a hidden prop modelValue which is mapped to email & password, prop modelValue can be accepted by child
+            // parent is listening for emit events from child to update its values
+            template: `
+                <form @submit.prevent="handleSubmit">
+                    <h1>{{ title }}</h1>
+                    <custom-input v-model="email" v-bind:label="emailLabel"/>
+                    <custom-input v-model="password" v-bind:label="passwordLabel"/>
+                    <button>Log In</button>
+                </form>
+            `,
+            // custom components used within another component must be defined in an array with the string label
+            components: ['custom-input'],
+
+            data() {
+                return {
+                    title: 'Login Form',
+                    email: '',
+                    password: '',
+                    emailLabel: 'Email',
+                    passwordLabel: 'Password'
+                }
+            },
+            methods: {
+                handleSubmit() {
+                    if ((this.email) || (this.password) != '') {
+                        console.log(this.email, this.password);
+                    }
+                    else {
+                        console.log('email or password is empty');
+                    }
+                }
+            }
+        })
+        // custom component for validating inputs submitted by user
+        // label is not defined within custom-input to prevent layers of inheritance convoluting the passage of information to child component (custom-input)
+        // *** PROPS PASSED TO CHILDREN ARE IMMUTABLE! variables like data can only be changed within the same component
+        app.component('custom-input', {
+            template: `
+                <label>
+                    {{ label }}
+                    <input type="text" v-model="inputValue">
+                </label >
+            `,
+            // array of strings, all of the information to be passed down from parent "login-form" to child "custom-input"
+            props: ['label', 'modelValue'],
+            computed: {
+                inputValue: {
+                    // need to get value from parent component
+                    get() {
+                        return this.modelValue
+                    },
+                    // set child component value to parent value
+                    set(value) {
+                        // debug: console.log(value)
+                        // emit allows passing data, first arg is type of data emitted, second arg is value 
+                        this.$emit('update:modelValue', value)
+                    }
+                }
+
+            },
+            // data() {
+            //     return {
+            //         inputValue: ''
+            //     }
+            // }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

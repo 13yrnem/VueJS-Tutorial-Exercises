@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lifecycle Hooks</title>
+    <style>
+        .box {
+            background-color: dimgray;
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="toggleBox">Toggle Box</button>
+        <test-box v-if="isVisible" />
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let app = Vue.createApp({
+            data: function () {
+                return {
+                    isVisible: false,
+                }
+            },
+            methods: {
+                toggleBox: function () {
+                    this.isVisible = !this.isVisible
+                }
+            },
+            // hook runs when data is updated for the main component, eg: to check if user is authorized
+            updated() {
+                console.log('updated')
+            }
+        })
+        app.component('test-box', {
+            template: `
+                <div class="box"></div>
+            `,
+            // lifecycle hook can be used for API calls
+            created() {
+                console.log('created')
+            },
+            // lifecycle hook can be used for API calls
+            mounted() {
+                console.log('mounted')
+            },
+            // lifecycle hook, same as "destroy" just updated syntax for Vue3
+            // can be used to clean up data after an event including to just remove one
+            unmounted() {
+                console.log('unmounted')
+            },
+
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

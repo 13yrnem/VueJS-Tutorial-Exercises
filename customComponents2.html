@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 3 Basics</title>
+    <style>
+        input {
+            margin: 10px;
+            display: block;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <login-form />
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        let app = Vue.createApp({
+            // retaining as placeholder from previous exercises
+            data: function () {
+                return {
+                    // placeholder
+                }
+            },
+            // retaining as placeholder from previous exercises
+            methods: {
+                // placeholder
+            }
+        })
+
+        app.component('login-form', {
+            // Log in will cause page refresh, default behavior for buttons... want to address this with an event modifier "@submit.prevent" 
+            // v-model directive will bind contents of the inputs email/password to the variables email/password
+            template: `
+                <form @submit.prevent="handleSubmit">
+                    <h1>{{ title }}</h1>
+                    <input type="email" v-model="email"/>
+                    <input type="password" v-model="password"/>
+                    <button>Log In</button>
+                </form>
+            `,
+            data() {
+                return {
+                    // if functions are defined within a custom component, must be called inside the template
+                    // email and password are instantiated as empty strings to be captured by user input with v-model
+                    title: 'Login Form',
+                    email: '',
+                    password: ''
+                }
+            },
+            methods: {
+                handleSubmit() {
+                    // uses "this" context since handleSubmit does not take email,password as arguments
+                    // added checking fields for empty strings
+                    if ((this.email) || (this.password) != '') {
+                        console.log(this.email, this.password);
+                    }
+                    else {
+                        console.log('email or password is empty');
+                    }
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

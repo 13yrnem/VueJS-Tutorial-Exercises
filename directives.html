@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 3 Basics</title>
+    <style>
+        /* css box style & size */
+        .box {
+            background-color: dimgray;
+            height: 200px;
+            width: 200px;
+        }
+
+        /* css box2 color */
+        .box.two {
+            background-color: aqua;
+            height: 200px;
+            width: 200px;
+        }
+
+        /* css box3 color */
+        .box.three {
+            background-color: coral;
+            height: 200px;
+            width: 200px;
+        }
+
+        /* hides elements until Vue app is loaded, and then removed once loaded to display contents */
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <!-- code inside double moustache parsed as javascript -->
+        {{ greeting }}
+        <!-- two way data binding -->
+        <input v-model="greeting" />
+
+        <hr />
+        <!-- displayed when "v-if" condition is true, does not exist in DOM when false.. options: "v-else-if", "v-else"-->
+        <div v-if="isVisible" class="box"></div>
+        <!-- alternative "v-show" takes boolean like "v-if" but always present in the DOM, useful for something that needs to be toggled frequently -->
+        <div v-show="isVisibleTwo" class="box two"></div>
+        <!-- else condition always displays box3 -->
+        <div v-else class="box three"></div>
+
+        <!-- Toggle display of boxes -->
+        <div id="isVisibleToggle">
+            <!-- box 1 toggle -->
+            <button v-on:click="isVisible=!isVisible">Box1 Toggle</button>
+            <!-- box 2 toggle -->
+            <button v-on:click="isVisibleTwo=!isVisibleTwo">Box2 Toggle</button>
+        </div>
+    </div>
+    <!-- "vue@next" ensures use of latest stable version -->
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        // instantiate Vue
+        let app = Vue.createApp({
+            // data is a function which returns an object
+            data: function () {
+                return {
+                    // function must return object, greeting is the object. Vue looks inside data object for a variable named greeting.
+                    greeting: 'Hello Vue 3!',
+                    isVisible: false,
+                    isVisibleTwo: true
+                }
+            },
+        })
+        // mount app 
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

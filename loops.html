@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 3 Basics</title>
+    <style>
+        input {
+            margin: 10px;
+            display: block;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <login-form />
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        let app = Vue.createApp({
+            // retaining as placeholder from previous exercises
+            data: function () {
+                return {
+                    // placeholder
+                }
+            },
+            // retaining as placeholder from previous exercises
+            methods: {
+                // placeholder
+            }
+        })
+
+        // using v-for to iterate through the list of inputs found in "Login Form" instead of repeating blocks for email and password separately
+        // :key with index i is best practice for production settings eg: when different components are no longer located in the same file
+        app.component('login-form', {
+            template: `
+                <form @submit.prevent="handleSubmit">
+                    <h1>{{ title }}</h1>
+                    <custom-input 
+                        v-for="(input, i) in inputs"
+                        :key="i"
+                        v-model="input.value" 
+                        :label="input.label"
+                        :type="input.type"
+                    />
+                    <button>Log In</button>
+                </form>
+            `,
+            components: ['custom-input'],
+
+            data() {
+                return {
+                    title: 'Login Form',
+                    inputs: [
+                        {
+                            label: 'Email',
+                            value: '',
+                            type: 'email'
+                        },
+                        {
+                            label: 'Password',
+                            value: '',
+                            type: 'password'
+                        }
+                    ],
+                }
+            },
+            methods: {
+                handleSubmit() {
+                    // this.inputs[0] corresponds to email in the data inputs array, index[1] is password, inputs attributes in list of lists can be accesed with inputs[index].attr
+                    console.log(this.inputs[0].value, this.inputs[1].value);
+                }
+            }
+        })
+        app.component('custom-input', {
+            template: `
+                <label>
+                    {{ label }}
+                    <input :type="type" v-model="inputValue">
+                </label >
+            `,
+            props: ['label', 'type', 'modelValue'],
+            computed: {
+                inputValue: {
+                    get() {
+                        return this.modelValue
+                    },
+                    set(value) {
+                        this.$emit('update:modelValue', value)
+                    }
+                }
+
+            },
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>

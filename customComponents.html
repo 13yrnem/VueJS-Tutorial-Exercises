@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vue 3 Basics</title>
+    <style>
+        /* styling for input boxes, 10 px margin and "block" display so they don't default to inline */
+        input {
+            margin: 10px;
+            display: block;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <login-form />
+    </div>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+
+        let app = Vue.createApp({
+            // retaining as placeholder from previous exercises
+            data: function () {
+                return {
+                    // placeholder
+                }
+            },
+            // retaining as placeholder from previous exercises
+            methods: {
+                // placeholder
+            }
+        })
+        // custom component with 2 args ---- function ('html tag', {options objects})
+        // custom component options objects can be called from outside a custom component, such as data & methods
+        app.component('login-form', {
+            // template is the only requirement! graves allow for multi line html snippets to be re-used
+            // no syntax highlighting / autocomplete because this not how custom components are typically created
+            template: `
+                <div>
+                    <h1>{{ title }}</h1>
+                    <input type="email" />
+                    <input type="password" />
+                </div>
+            `,
+            data() {
+                return {
+                    // if functions are defined within a custom component, must be called inside the template
+                    title: 'Login Form'
+                }
+            }
+
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
