@@ -1,2 +1,1 @@
-# VueJS-Tutorial-Exercises
-Boilerplate VueJS tutorial exercises with comments and changes
+# Miscellaneous coding projects and exercises with VueJS, JS, and Arduino projects
