@@ -1,1 +1,1 @@
-# Miscellaneous coding projects and exercises with VueJS, JS, and Arduino projects
+# Miscellaneous coding exercises with VueJS, JS, HTML, and CSS
